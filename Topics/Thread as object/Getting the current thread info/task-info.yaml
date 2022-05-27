@@ -1,0 +1,15 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    fun printCurrentThreadInfo() {
+        // get the thread and print its info
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/15603#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 27 May 2022 20:02:11 UTC
+record: -1

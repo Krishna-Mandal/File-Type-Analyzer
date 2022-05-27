@@ -1,0 +1,19 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: As instances of the standard class <b>Thread</b> and its subclasses
+- text: As instances of a special class from an external library
+- text: As a group of special native functions
+files:
+- name: src/Main.kt
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    fun main(args: Array<String>) {
+      // put your code here
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/15597#comment
+status: Solved
+record: -1

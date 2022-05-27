@@ -1,0 +1,16 @@
+type: code
+custom_name: Is the thread a daemon?
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    fun printIfDaemon(thread: Thread) {
+        // implement logic
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/15600#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 27 May 2022 19:54:21 UTC
+record: -1
