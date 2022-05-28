@@ -1,0 +1,17 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    class MessageNotifier(...) : Thread() { // implement the constructor
+        override fun run() {
+            // implement the method to print the message stored in a field
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/16012#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 27 May 2022 21:51:44 UTC
+record: -1

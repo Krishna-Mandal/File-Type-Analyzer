@@ -1,0 +1,15 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    fun startRunnables(runnables: Array<Runnable>) {
+        // implement the method
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/16017#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 27 May 2022 21:35:43 UTC
+record: -1
