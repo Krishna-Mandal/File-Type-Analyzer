@@ -1,0 +1,50 @@
+<h2>Binary search</h2>
+<html>
+ <head></head>
+ <body>
+  <p><strong>Binary search</strong> is a fast algorithm for finding an element in a <strong>sorted array</strong>. The algorithm runs in logarithmic time, making <span class="math-tex">\(O(\log n)\)</span> comparisons, where <span class="math-tex">n</span> is the length of the input array.</p> 
+  <p>The algorithm begins by comparing the middle array element with the target value. If there is a match, it returns the element index. Otherwise, the search proceeds to the left or right subarray, depending on whether the target value is less or greater than the middle element. It goes on until it finds the target value or a new search interval is empty.</p> 
+  <h5 id="example" style="text-align: center;">Example</h5> 
+  <p>Suppose we have an integer array sorted in ascending order. We want to find the index of the value <span class="math-tex">34</span> with the binary search. The input array has nine elements with indices from <span class="math-tex">\(1\)</span> to <span class="math-tex">\(9\)</span>. The target value <span class="math-tex">\(34\)</span> has index <span class="math-tex">\(8\)</span>.</p> 
+  <p style="text-align: center;"><img alt="" height="70" name="Binary_search_1_1.svg" src="https://ucarecdn.com/08f83770-e569-4ed4-87f4-c80c2f0b02a7/" width="363"></p> 
+  <ul> 
+   <li>First, we consider the entire array. The leftmost index is <span class="math-tex">\(1\)</span>, the rightmost one is <span class="math-tex">\(9\)</span>. The index of the middle element is <span class="math-tex">\(\frac{1 + 9}{2}=5\)</span></li> 
+  </ul> 
+  <p style="text-align: center;"><img alt="" height="121" name="Binary search 2.svg" src="https://ucarecdn.com/5dced2a6-b473-49c3-a23f-ca39dbe8265c/" width="367"></p> 
+  <ul> 
+   <li>It's time to make some decisions. Our target element <span class="math-tex">\(34\)</span> is greater than the middle element <span class="math-tex">\(24\)</span>. Because the array is sorted in ascending order, the left subarray cannot possibly contain the target element, so we continue the search in the right subarray.</li> 
+   <li>We consider the elements with indices from <span class="math-tex">\(6\)</span> to <span class="math-tex">\(9\)</span>. The index of the middle element is <span class="math-tex">\(\frac{6+9}{2}=7\)</span> (integer division).</li> 
+  </ul> 
+  <p style="text-align: center;"><img alt="" height="121" name="Binary search 3.svg" src="https://ucarecdn.com/e200eaa2-3582-48a7-84ae-0603bc519b08/" width="370"></p> 
+  <ul> 
+   <li>The target element <span class="math-tex">\(34\)</span> is greater than the middle element <span class="math-tex">\(30\)</span>. Because the array is sorted in ascending order, we continue the search in the right subarray.</li> 
+   <li>This time we look at elements with indices from <span class="math-tex">\(8\)</span> to <span class="math-tex">\(9\)</span>. The index of the middle element is <span class="math-tex">\(\frac{8+9}{2}=8\)</span> (integer division).</li> 
+  </ul> 
+  <p style="text-align: center;"><img alt="" height="146" name="Binary search 4.svg" src="https://ucarecdn.com/bd9c8890-f24e-4678-b24d-47a466c8e75e/" width="375"></p> 
+  <p> </p> 
+  <p>Look what has happened: the target element <span class="math-tex">\(34\)</span> matches the middle value <span class="math-tex">\(34\)</span>! Hence, we return the index <span class="math-tex">\(8\)</span>.</p> 
+  <h5 id="pseudocode-of-the-binary-search-function" style="text-align: center;">Pseudocode of the binary search function</h5> 
+  <pre><code class="java">function found_binary(array, value):
+    left = 1                            // the starting value of the left border
+    right = len(array)                  // the starting value of the right border
+    while left &lt;= right:                // while the left border is to the left 
+                                        // of the right one (or if they match)
+        middle = int((left+right)/2)    // finding the middle of the array (int removes
+                                        // the fractional part)
+        if array[middle] == value then  // if the value from the middle of the array 
+                                        // is equal to the target one
+            return middle               // returning the index of this element
+        elif array[middle] &gt; value then // else if the value from the middle is greater 
+                                        // than the target one
+            right = middle - 1          // setting a new value to the right border (the one 
+                                        // to the left of the middle one)
+        else:                           // else (if the value from the middle is less than 
+                                        // the target one)
+            left = middle + 1           // setting a new value to the left border (the one 
+                                        // to the right of the middle one)
+    return -1                           // if the value is not found, we return -1</code></pre> 
+  <h5 id="conclusion" style="text-align: center;">Conclusion</h5> 
+  <p>The binary search algorithm divides the array into two subarrays at each step and then searches for the element in one of them. The number of comparisons is much less than the length of the array.</p> 
+  <p>If you would like to see a visualization of the algorithm, <a href="https://www.cs.usfca.edu/~galles/visualization/Search.html" rel="nofollow noopener noreferrer" target="_blank" title="Link: https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html">check this out</a>; input a target value and click "Binary Search"!</p>
+ </body>
+</html>

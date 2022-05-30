@@ -1,0 +1,45 @@
+<h2>Workers in programs</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Take a look at a class that extends <code class="language-kotlin">Thread</code>:</p> 
+  <pre><code class="language-kotlin">class Worker(val line: String) : Thread() {
+    override fun run() {
+        println(line)
+    }
+}</code></pre> 
+  <p>There are two applications that use this class. Select all correct statements about them.</p> 
+  <p>The first application:</p> 
+  <pre><code class="language-kotlin">class Application1 {
+    fun startWork() {
+        val t1 = Worker("Hello from t1")
+        val t2 = Worker("Hello from t2")
+        val t3 = Worker("Hello from t3")
+        t1.start()
+        t2.start()
+        t3.start()
+
+        t1.join()
+        t2.join()
+        t3.join()
+    }
+}</code></pre> 
+  <p>The second application:</p> 
+  <pre><code class="language-kotlin">class Application2 {
+    fun startWork() {
+        val t1 = Worker("Hello from t1")
+        val t2 = Worker("Hello from t2")
+        val t3 = Worker("Hello from t3")
+
+        t1.start()
+        t1.join()
+
+        t2.start()
+        t2.join()
+        
+        t3.start()
+        t3.join()
+    }
+}</code></pre>
+ </body>
+</html>

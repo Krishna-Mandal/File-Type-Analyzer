@@ -1,0 +1,22 @@
+type: dataset
+files:
+- name: data/sample/input.txt
+  visible: true
+  text: |
+    3 10 12 13 19 38 42 48 50 63 82 85 90 97 98
+    86 91 73 62 82 11 85 40 31 62 76 67 28 97 21
+  learner_created: false
+- name: src/Main.kt
+  visible: true
+  text: "// write your code here \n\nfun main(args: Array<String>) {\n  // put your\
+    \ code here\n}\n"
+  learner_created: false
+- name: data/dataset/input.txt
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/16626#comment
+status: Solved
+feedback:
+  message: <html>You are right</html>
+  time: Sun, 29 May 2022 13:34:27 UTC
+record: -1

@@ -1,0 +1,30 @@
+<h2>The max number of parallel threads</h2>
+<html>
+ <head></head>
+ <body>
+  <p>What is the maximum number of threads that can work in parallel in the program below?</p> 
+  <p><code class="language-kotlin">SlackerThread</code> is a class representing a thread that sleeps a random number of seconds after the start.</p> 
+  <p><button class="btn-sm btn-outline-secondary" onclick="getElementById('hint-295').style.display='inline'"> Hint </button> </p>
+  <div id="hint-295" style="display:none;">
+    Don't forget about the main thread. 
+  </div> 
+  <pre><code class="language-kotlin">fun main() {
+    val t1 = SlackerThread()
+    val t2 = SlackerThread()
+
+    t1.start()
+    t2.start()
+
+    t2.join()
+
+    val t3 = SlackerThread()
+    val t4 = SlackerThread()
+
+    t3.start()
+    t4.start()
+
+    t3.join()
+    t4.join()
+}</code></pre>
+ </body>
+</html>
