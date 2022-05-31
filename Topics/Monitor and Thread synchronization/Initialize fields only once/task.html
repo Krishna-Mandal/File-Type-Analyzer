@@ -1,0 +1,18 @@
+<h2>Initialize fields only once</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a class named<strong> </strong><code class="language-kotlin">SimpleClass</code><strong>.</strong> It<strong> </strong>has a single field of the String type and a method to initialize the field. The method writes a given value to the field if it's empty. Otherwise, the method does nothing.</p> 
+  <pre><code class="language-kotlin">class SimpleClass {
+
+    var str: String = ""
+
+    fun initWithString(str: String) {
+        if (this.str.isEmpty()) { // 1
+            this.str = str        // 2
+        }                         // 3
+    }
+}</code></pre> 
+  <p>Multiple threads are trying to invoke the method <code class="language-kotlin">initWithString</code> on the same instance. How can you synchronize this code so that the field of the instance gets initialized only once? Select all correct cases:</p>
+ </body>
+</html>

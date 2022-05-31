@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    class Storage {
+        var productCount = 0
+
+        fun addProduct() {
+            productCount++
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/17877#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 30 May 2022 20:21:21 UTC
+record: -1

@@ -1,0 +1,33 @@
+<h2>Dealing with currency</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You have a class <code class="language-kotlin">BankAccount</code>, which has three methods: <code class="language-kotlin">addDollars()</code>, <code class="language-kotlin">addEuro()</code>, and <code class="language-kotlin">addRubles()</code>. All these methods change your balance:</p> 
+  <pre><code class="language-kotlin">class BankAccount {
+    var balance = 0L
+
+    fun addMoney(amount: Int, action: String) {
+        when (action) {
+            "1" -&gt; addDollars(amount)
+            "2" -&gt; addEuro(amount)
+            else -&gt; addRubles(amount)
+        }
+    }
+
+    fun addDollar() {
+        balance += 75
+    }
+    fun addEuro() {
+        balance += 84
+    }
+    fun addRuble() {
+        balance += 1
+    }
+}</code></pre> 
+  <p>The program reads the number of threads and creates the threads that will change your balance.</p> 
+  <p>Use <strong>block synchronization</strong> to ensure the correct work of this program.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 30 seconds</font><br><br>
+<b>Caution</b><br><br>
+You may see errors in your code or execution results due to missing context. Don’t worry about it, just write the solution and press Check.
+<br><br>

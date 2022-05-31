@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Declare the method with the  <b>@Synchronized</b> annotation
+- text: Put lines 1–3 in a synchronized block, the monitor should be the instance
+    (<b>this</b>)
+- text: Declare the field <b>str</b> with the <b>synchronized</b> keyword
+- text: Put line 2 in a synchronized block, the monitor should be the instance (<b>this</b>)
+- text: ' Nothing needs to be done, everything works correctly'
+- text: Declare the class with the  <b>@Synchronized</b> annotation
+files:
+- name: src/Main.kt
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    fun main(args: Array<String>) {
+      // put your code here
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/17907#comment
+status: Solved
+record: -1

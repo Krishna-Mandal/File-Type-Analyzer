@@ -3,3 +3,5 @@ content:
 - Custom threads
 - Thread management
 - Binary search
+- Thread synchronization
+- Monitor and Thread synchronization

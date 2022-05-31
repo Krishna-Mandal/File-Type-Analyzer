@@ -1,0 +1,26 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    class Account {
+
+        var balance = 0L
+
+        @Synchronized
+        fun withdraw(amount: Long): Boolean {
+             // do something useful
+        }
+
+        @Synchronized
+        fun deposit(amount: Long) {
+            // do something useful
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/17908#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 30 May 2022 20:47:37 UTC
+record: -1

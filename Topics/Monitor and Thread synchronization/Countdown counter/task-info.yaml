@@ -1,0 +1,17 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    class CountDownCounter(var count: Int) {
+        fun decrement() {
+            count--
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/17902#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 30 May 2022 20:44:09 UTC
+record: -1

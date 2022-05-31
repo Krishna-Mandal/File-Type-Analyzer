@@ -1,0 +1,21 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Two threads cannot simultaneously enter into two synchronized blocks having
+    the same monitor
+- text: Fields can be declared as synchronized
+- text: Classes can be declared as synchronized
+- text: Methods in a class are synchronized on an instance of the class
+files:
+- name: src/Main.kt
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    fun main(args: Array<String>) {
+      // put your code here
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/17904#comment
+status: Solved
+record: -1
