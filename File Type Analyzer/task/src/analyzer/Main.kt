@@ -1,56 +1,49 @@
 package analyzer
 
 import java.io.File
+import kotlin.concurrent.thread
 
 const val ZERO = 0
 const val ONE = 1
 const val TWO = 2
 const val THREE = 3
-const val FOUR = 4
 const val UNKNOWN = "Unknown file type"
 
-enum class ALGORITHM {
-    NAIVE,
-    KMP
-}
 data class Option(
-    val algo: ALGORITHM,
     val fileName: String,
     val filePattern: String,
     val resultString: String
 )
+
 fun main(args: Array<String>) {
 
-    val option = parseArgument(args = args)
-    val start = System.nanoTime()
-    val result = findFileType(option)
-    val elapsed = System.nanoTime() - start
-    println(result)
-    println("It took $elapsed seconds")
+    val folderName = File(args[0])
+    val threads = mutableListOf<Thread>()
+    folderName.walkTopDown().filter { it.isFile }.forEach {
+        args[0] = it.absolutePath
+        val option = parseArgument(args)
+        val searchThread = thread(start = true, block = {kmpSearch(option)})
+        threads.add(searchThread)
+    }
+
+    for (thread in threads) {
+        thread.join()
+    }
 }
 
 fun parseArgument(args: Array<String>): Option {
-    if (args.size < FOUR) {
+    if (args.size < THREE) {
         throw Exception("Wrong number of Input")
     }
 
     return Option(
-        ALGORITHM.valueOf(args[ZERO].substring(TWO).uppercase()),
+        args[ZERO],
         args[ONE],
-        args[TWO],
-        args[THREE]
+        args[TWO]
     )
 }
 
-fun naiveSearch(option: Option): String {
-    val file = File(option.fileName)
-    var found = false
-    file.readLines().forEach() { if (it.contains(option.filePattern)) found = true }
-
-    return if (found) option.resultString else UNKNOWN
-}
-
-fun kmpSearch(option: Option): String {
+fun kmpSearch(option: Option) {
     val file = File(option.fileName)
     val text = file.readText()
 
@@ -70,7 +63,8 @@ fun kmpSearch(option: Option): String {
         }
 
         if (patternIndex == patternLength) {
-            return option.resultString
+            println("${file.name}: ${option.resultString}")
+            return
         } else if (textIndex < textLength && pattern[patternIndex] != text[textIndex]) {
             if (patternIndex != 0) {
                 patternIndex = prefixFunction[patternIndex - 1]
@@ -81,7 +75,8 @@ fun kmpSearch(option: Option): String {
 
     }
 
-    return UNKNOWN
+    println("${file.name}: $UNKNOWN")
+    return
 }
 
 fun computePrefixFunction(filePattern: CharArray, prefixFunction: MutableList<Int>) {
@@ -106,12 +101,5 @@ fun computePrefixFunction(filePattern: CharArray, prefixFunction: MutableList<In
                 ++index
             }
         }
-    }
-}
-
-fun findFileType(option: Option): String {
-    return when (option.algo) {
-        ALGORITHM.NAIVE -> naiveSearch(option)
-        ALGORITHM.KMP -> kmpSearch(option)
     }
 }

@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/688297/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Mon, 30 May 2022 19:10:42 UTC
+update_date: Mon, 06 Jun 2022 19:20:54 UTC
 stages:
 - id: 1223
   step: 18929
@@ -13,7 +13,7 @@ stages:
   is_completed: true
 - id: 1225
   step: 18931
-  is_completed: false
+  is_completed: true
 - id: 1226
   step: 18932
   is_completed: false
@@ -24,8 +24,6 @@ topics:
   0:
   - title: Binary numbers
     theory_id: 5544
-  - title: Hexadecimal numbers
-    theory_id: 8788
   - title: Write, compile, and run
     theory_id: 3739
   - title: JVM, JRE, and JDK
@@ -34,10 +32,10 @@ topics:
     theory_id: 6865
   - title: IDE
     theory_id: 10996
-  - title: Computer algorithms
-    theory_id: 16547
   - title: Introduction to Operating systems
     theory_id: 9704
+  - title: Computer algorithms
+    theory_id: 16547
   - title: The big O notation
     theory_id: 16699
   - title: Data structures
@@ -112,6 +110,10 @@ topics:
     theory_id: 5991
   - title: Lambda expressions
     theory_id: 6154
+  - title: Command line overview
+    theory_id: 8977
+  - title: Parameters and Options
+    theory_id: 9746
   - title: Unicode
     theory_id: 7899
   - title: Characters
@@ -152,6 +154,8 @@ topics:
     theory_id: 4564
   - title: String arrays
     theory_id: 11477
+  - title: The main() function
+    theory_id: 10484
   - title: Getting substrings
     theory_id: 8535
   - title: Processing strings
@@ -162,12 +166,6 @@ topics:
     theory_id: 19510
   - title: For loop and arrays
     theory_id: 4657
-  - title: Command line overview
-    theory_id: 8977
-  - title: Parameters and Options
-    theory_id: 9746
-  - title: The main() function
-    theory_id: 10484
   - title: Jumps and returns
     theory_id: 6165
   - title: Reading files
@@ -259,6 +257,10 @@ topics:
   - title: Monitor and Thread synchronization
     theory_id: 17901
   3:
+  - title: Fixed-size array
+    theory_id: 20078
+  - title: Dynamic array
+    theory_id: 5357
   - title: Recursion basics
     theory_id: 5984
   - title: Decrease and conquer
