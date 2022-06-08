@@ -7,7 +7,7 @@
   <p>Before we start using synchronization in our code, let's introduce the necessary terms and concepts.</p> 
   <p><strong>1) Thread synchronization </strong>is a mechanism which ensures that two or more concurrent threads do not simultaneously execute a code segment called a critical section.</p> 
   <p><strong>2) A critical</strong><strong> section</strong> is a region of code that accesses shared resources and should not be executed by more than one thread at the same time. A shared resource may be a variable, file, input/output port, database, or something else.</p> 
-  <p>Let's consider an example. Let some class <code class="language-kotlin">Counter</code> have a field named <code class="language-kotlin">counter</code>:</p> 
+  <p>Let's consider an example. Let some class <code class="language-kotlin">Counter</code> have a field named <code class="language-kotlin">count</code>:</p> 
   <pre><code class="language-kotlin">class Counter {
     var count = 0
 

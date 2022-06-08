@@ -12,7 +12,8 @@ const val UNKNOWN = "Unknown file type"
 data class Option(
     val fileName: String,
     val filePattern: String,
-    val resultString: String
+    val resultString: String,
+    val prio: Int
 )
 
 fun main(args: Array<String>) {
@@ -21,9 +22,12 @@ fun main(args: Array<String>) {
     val threads = mutableListOf<Thread>()
     folderName.walkTopDown().filter { it.isFile }.forEach {
         args[0] = it.absolutePath
-        val option = parseArgument(args)
-        val searchThread = thread(start = true, block = {kmpSearch(option)})
-        threads.add(searchThread)
+        val options = parseArgument(args)
+        options.forEach{
+            val searchThread = thread(start = true, block = {kmpSearch(it)})
+            threads.add(searchThread)
+        }
+
     }
 
     for (thread in threads) {
@@ -31,16 +35,25 @@ fun main(args: Array<String>) {
     }
 }
 
-fun parseArgument(args: Array<String>): Option {
-    if (args.size < THREE) {
+fun parseArgument(args: Array<String>): MutableList<Option> {
+    if (args.size < TWO) {
         throw Exception("Wrong number of Input")
     }
+    var options = mutableListOf<Option>()
+    var patternFile = File(args[ONE])
+    patternFile.forEachLine {
+        val (prio, filePattern, resultString) = it.split(";")
+        options.add(
+            Option(
+                fileName = args[ZERO],
+                filePattern = filePattern.replace("\"", ""),
+                resultString = resultString.replace("\"", ""),
+                prio = prio.toInt()
+            )
+        )
+    }
 
-    return Option(
-        args[ZERO],
-        args[ONE],
-        args[TWO]
-    )
+    return options
 }
 
 fun kmpSearch(option: Option) {
