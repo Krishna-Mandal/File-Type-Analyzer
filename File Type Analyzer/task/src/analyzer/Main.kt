@@ -2,11 +2,11 @@ package analyzer
 
 import java.io.File
 import kotlin.concurrent.thread
+import kotlin.math.pow
 
 const val ZERO = 0
 const val ONE = 1
 const val TWO = 2
-const val THREE = 3
 const val UNKNOWN = "Unknown file type"
 
 data class Option(
@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
         args[0] = it.absolutePath
         val options = parseArgument(args)
         options.forEach{
-            val searchThread = thread(start = true, block = {kmpSearch(it)})
+            val searchThread = thread(start = true, block = { kmpSearch(it) })
             threads.add(searchThread)
         }
 
@@ -39,8 +39,8 @@ fun parseArgument(args: Array<String>): MutableList<Option> {
     if (args.size < TWO) {
         throw Exception("Wrong number of Input")
     }
-    var options = mutableListOf<Option>()
-    var patternFile = File(args[ONE])
+    val options = mutableListOf<Option>()
+    val patternFile = File(args[ONE])
     patternFile.forEachLine {
         val (prio, filePattern, resultString) = it.split(";")
         options.add(
@@ -54,6 +54,65 @@ fun parseArgument(args: Array<String>): MutableList<Option> {
     }
 
     return options
+}
+
+fun getCode(char: Char): Int {
+    return char.code
+}
+
+fun calculateHash(subString: String, a: Int, m: Int): Int {
+    var hash = 0
+    for (index in subString.indices) {
+        val calculatedHash = (getCode(subString[index]) * a.toDouble().pow(index)).toInt()
+        hash += calculatedHash
+    }
+
+    return hash % m
+}
+
+fun calculateRollingHash(subString: String, a: Int, m: Int, lastChar: Char?, lastHash: Int): Int {
+    return if (lastChar == null) {
+        calculateHash(subString, a, m)
+    } else {
+        val removeHash = (getCode(lastChar) * a.toDouble().pow(subString.lastIndex)).toInt()
+        val nethash = ((lastHash - removeHash) * a + getCode(subString.first()))
+        var rem = nethash % m
+        if (rem < 0) {
+            rem += m
+        } else {
+            rem
+        }
+
+        return rem
+    }
+}
+
+fun rabinKarpSearch(option: Option) {
+    val file = File(option.fileName)
+    val text = file.readText()
+    val pattern = option.filePattern
+
+    var startIndex = text.length - pattern.length
+    var endIndex = text.length
+    var lastChar: Char? = null
+    var lastHash = 0
+    val patterHash = calculateHash(pattern, 3, 53)
+
+    while(startIndex >= 0) {
+        val subString = text.substring(startIndex, endIndex)
+        val subStrHash = calculateRollingHash(subString = subString, 3, 53, lastChar, lastHash)
+        if (patterHash == subStrHash && pattern == subString) {
+            println("${file.name}: ${option.resultString}")
+            return
+        }
+        lastChar = subString.last()
+        lastHash = subStrHash
+        --startIndex
+        --endIndex
+    }
+
+    println("${file.name}: $UNKNOWN")
+    return
 }
 
 fun kmpSearch(option: Option) {
