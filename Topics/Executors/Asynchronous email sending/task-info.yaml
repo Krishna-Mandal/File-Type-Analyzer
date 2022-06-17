@@ -1,0 +1,20 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: "import java.util.concurrent.Executors\n\nfun main() {\n    val messageCounts:\
+    \ Int = readln().toInt()\n    val messages: MutableList<String> = mutableListOf<String>()\
+    \ \n    for (i in 0 until messageCounts) {\n        messages.add(readln())\n \
+    \   }\n    val sender: MailSender = MockMailSender()\n    asyncSend(sender, messages)\n\
+    }\n\nfun asyncSend(sender: MailSender, messages: List<String>) {\n    // TODO\n\
+    }\n\n// Do not change it\ninterface MailSender {\n    fun send(message: String)\n\
+    }\n\n// The class simulates mail sending\n// Do not change it\nclass MockMailSender\
+    \ : MailSender {\n    override fun send(message: String) {\n        println(\"\
+    Message $message was sent\")\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/20105#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 15 Jun 2022 21:02:02 UTC
+record: -1

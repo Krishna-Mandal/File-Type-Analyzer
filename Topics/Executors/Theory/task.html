@@ -1,0 +1,135 @@
+<h2>Executors</h2>
+<html>
+ <head></head>
+ <body>
+  <p>We've already learned how to create threads by extending the <code class="language-kotlin">Thread</code> class or implementing the <code class="language-kotlin">Runnable</code> interface. Both ways allow you to create an object that represents a thread and start it to perform a piece of code in a separate thread. While it is easy to create several threads and start them, it becomes a problem when your application has hundreds or even thousands of threads running concurrently.</p> 
+  <p>In addition, <code class="language-kotlin">Thread</code> is a low-level class, and mixing it with the high-level code of your application may lead to unreadable code and poor architecture in the future. It may also produce some well-known errors, such as invoking <code class="language-kotlin">run()</code> instead of <code class="language-kotlin">start()</code>.</p> 
+  <p>Now we will learn how we can work with a pool of threads by creating <strong>thread services</strong> which can manage multi-threading. </p> 
+  <h5 id="tasks-and-executors" style="text-align: center;">Tasks and executors</h5> 
+  <p>To simplify the development of multi-threaded applications, Kotlin provides an interface called <code class="language-kotlin">ExecutorService</code> (or simply <strong>executor</strong>). It encapsulates one or more threads into a single pool and puts submitted tasks in an internal queue to execute them in threads.</p> 
+  <p style="text-align: center;"><img alt="" height="249" src="https://ucarecdn.com/f77a4b54-a7b0-43f1-bd0a-d8693a72a4bd/" width="626"></p> 
+  <p>This approach clearly isolates tasks from threads and allows you to focus on the tasks. You do not need to worry about creating and managing threads because the executor does it for you.</p> 
+  <h5 id="creating-executors" style="text-align: center;">Creating executors</h5> 
+  <p>All types of executors are located in the <code class="language-kotlin">java.util.concurrent</code> package, which you need to import first. This package also contains a handy utility class <code class="language-kotlin">Executors</code> for creating different types of <code class="language-kotlin">ExecutorService</code>'s.</p> 
+  <p>First of all, let's create an executor with exactly four threads in the pool:</p> 
+  <pre><code class="language-kotlin">val executor: ExecutorService = Executors.newFixedThreadPool(4)</code></pre> 
+  <p>It can execute multiple tasks concurrently and speed up your program by performing somewhat parallel computations. If one of the threads dies, the executor creates a new one. We will further consider how to determine the required number of threads.</p> 
+  <h5 id="submitting-tasks" style="text-align: center;">Submitting tasks</h5> 
+  <p>An executor has the <code class="language-kotlin">submit</code> function, which accepts a <code class="language-kotlin">Runnable</code> task to be executed. Since <code class="language-kotlin">Runnable</code> is a functional interface, it is possible to use a lambda expression as a task.</p> 
+  <p>As an example, here we submit a task that prints <strong>"Hello!"</strong> to the standard output.</p> 
+  <pre><code class="language-kotlin">executor.submit { println("Hello!") }</code></pre> 
+  <p>Of course, we can declare a class that implements <code class="language-kotlin">Runnable</code> for our task and then submit an object of this class. However, for short tasks, it is very convenient to use lambda expressions together with executors.</p> 
+  <p>After invoking <code class="language-kotlin">submit</code>, the current thread does not wait for the task to complete. It just adds the task to the executor's internal queue to be executed asynchronously by one of the threads.</p> 
+  <p>The function also has several overloads, which we will consider in the following topics.</p> 
+  <h5 id="stopping-executors" style="text-align: center;">Stopping executors</h5> 
+  <p>An executor continues to work after the completion of a task, since the threads in the pool are waiting for new tasks. Your program will never stop while at least one executor still works.</p> 
+  <p>There are two functions that can stop executors:</p> 
+  <ul> 
+   <li><code class="language-kotlin">shutdown(): Unit</code> waits until all running tasks are completed and prohibits submitting new tasks;</li> 
+   <li><code class="language-kotlin">shutdownNow(): MutableList&lt;Runnable!&gt;</code> immediately stops all running tasks and returns a list of the tasks that were awaiting execution.</li> 
+  </ul> 
+  <p><strong>Note</strong> that, unlike <code class="language-kotlin">join()</code> of <code class="language-kotlin">Thread</code>, <code class="language-kotlin">shutdown()</code> does not block the current thread. If you need to wait until the execution is complete, you can invoke <code class="language-kotlin">awaitTermination(...)</code> with the specified waiting time.</p> 
+  <pre><code class="language-kotlin">val executor: ExecutorService = Executors.newFixedThreadPool(4)
+
+// submitting tasks
+
+executor.shutdown()
+
+val terminated = executor.awaitTermination(60, TimeUnit.MILLISECONDS)
+
+if (terminated) {
+    println("The executor was successfully stopped")
+} else {
+    println("Timeout elapsed before termination")
+}</code></pre> 
+  <h5 id="an-example-names-of-threads-and-tasks" style="text-align: center;">An example: names of threads and tasks</h5> 
+  <p>In the following example, we create an executor with a pool of four threads. We submit ten tasks to it and then analyze the results. Each task prints the name of the thread that executes it, as well as the name of the task.</p> 
+  <pre><code class="language-kotlin">import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+
+fun main() {
+    val NUMBER_OF_TASKS = 10
+    val executor: ExecutorService = Executors.newFixedThreadPool(POOL_SIZE)
+
+    for (i in 0..NUMBER_OF_TASKS) {
+        executor.submit {
+            val taskName: String = "task-$i"
+            val threadName: String = Thread.currentThread().name
+            println("$threadName executes $taskName")
+        }
+    }
+    executor.shutdown()
+}</code></pre> 
+  <p>If you launch this program several times, you will get a different output. Below is one of the possible outputs:</p> 
+  <pre><code class="language-no-highlight">pool-1-thread-1 executes task-0
+pool-1-thread-2 executes task-1
+pool-1-thread-4 executes task-3
+pool-1-thread-3 executes task-2
+pool-1-thread-3 executes task-7
+pool-1-thread-3 executes task-8
+pool-1-thread-3 executes task-9
+pool-1-thread-1 executes task-6
+pool-1-thread-4 executes task-5
+pool-1-thread-2 executes task-4</code></pre> 
+  <p>It clearly demonstrates that the executor uses all four threads to solve the tasks. The number of tasks solved by each thread can vary. We cannot know for sure what exactly we'll get.</p> 
+  <p>If you do not know how many threads are needed in your pool, you can take the number of available processors as the pool size.</p> 
+  <pre><code class="language-kotlin">val poolSize = Runtime.getRuntime().availableProcessors()
+val executor = Executors.newFixedThreadPool(poolSize)</code></pre> 
+  <h5 id="types-of-executors" style="text-align: center;">Types of executors</h5> 
+  <p>We have considered the most commonly used executor with a fixed size of the pool. Here are a few other types:</p> 
+  <ul> 
+   <li><strong>An executor with a single thread</strong></li> 
+  </ul> 
+  <p>The simplest executor has only a single thread in the pool. It may be enough for the async execution of rarely submitted and small tasks.</p> 
+  <pre><code class="language-kotlin">val executor: ExecutorService = Executors.newSingleThreadExecutor()</code></pre> 
+  <p><strong>Important:</strong> one thread may not have time to process all incoming tasks, and the queue will grow significantly, consuming all the memory.</p> 
+  <ul> 
+   <li><strong>An executor with a growing pool</strong></li> 
+  </ul> 
+  <p>There is also an executor that automatically increases the number of threads when needed and reuses previously constructed threads.</p> 
+  <pre><code class="language-kotlin">val executor: ExecutorService = Executors.newCachedThreadPool()</code></pre> 
+  <p>It can usually improve the performance of programs with many short-lived asynchronous tasks. However, it can also lead to problems when the number of threads increases too much. It is preferable to choose the fixed thread-pool executor whenever possible.</p> 
+  <ul> 
+   <li><strong>An executor that schedules a task</strong></li> 
+  </ul> 
+  <p>If you need to perform the same task periodically or only once after a given delay, use the following executor:</p> 
+  <pre><code class="language-kotlin">val executor: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()</code></pre> 
+  <p>The function <code class="language-kotlin">scheduleAtFixedRate()</code> submits a periodic <code class="language-kotlin">Runnable</code> task that becomes enabled first after the given <code class="language-kotlin">initDelay</code>, and subsequently with the given <code class="language-kotlin">period</code>.</p> 
+  <p>Here is a quick example with scheduling:</p> 
+  <pre><code class="language-kotlin">val executor: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+executor.scheduleAtFixedRate(
+    { println(LocalTime.now().toString() + ": Hello!") },
+     1000,
+     1000,
+     TimeUnit.MILLISECONDS
+)</code></pre> 
+  <p>Here is a fragment of the output:</p> 
+  <pre><code class="language-no-highlight">02:30:06.375392: Hello!
+02:30:07.375356: Hello!
+02:30:08.375376: Hello!
+...and even more...</code></pre> 
+  <p>It can be stopped the way we did it before.</p> 
+  <p>This kind of executor also has a function named <code class="language-kotlin">schedule</code>, which starts a task only once after the given delay, and another function <code class="language-kotlin">scheduleWithFixedDelay</code>, which starts the task with a fixed wait after the previous one is completed.</p> 
+  <h5 id="exception-handling" style="text-align: center;">Exception handling</h5> 
+  <p>In our examples, we often ignore error handling to simplify code. Here, we demonstrate one feature related to the handling of exceptions in executors (namely, the unchecked ones).</p> 
+  <p>What do you think the following code will print?</p> 
+  <pre><code class="language-kotlin">val executor = Executors.newSingleThreadExecutor()
+executor.submit { println(2 / 0) }</code></pre> 
+  <p>It does not print anything at all, not even the exception! That is why it is common practice to wrap a task in the <code class="language-kotlin">try-catch</code> block not to lose the exception.</p> 
+  <pre><code class="language-kotlin">val executor = Executors.newSingleThreadExecutor()
+executor.submit {
+    try {
+        println(2 / 0)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}</code></pre> 
+  <p>Now you will see the exception. In real applications, it is better to use some kind of logging to output it. Note that the executor will still work after the exception because it dynamically creates a new thread.</p> 
+  <h5 id="conclusion" style="text-align: center;">Conclusion</h5> 
+  <p>In this topic, you've learned how to create services which manage threads and tasks. In a nutshell:</p> 
+  <p>1. You can create different types of executor services by using functions of the Executors class: <code class="language-kotlin">newCachedThreadPool</code>, <code class="language-kotlin">newFixedThreadPool</code>, etc.</p> 
+  <p>2. You can add tasks to a service by using the function <code class="language-kotlin">submit</code>.</p> 
+  <p>3. You can stop the executor by using the function <code class="language-kotlin">shutdown</code>.</p> 
+  <p>Now, you can create and configure your own thread services, just remember about exceptions in tasks. This skill will come in handy when you'll work on a big project. Meanwhile, let's have some practice!</p>
+ </body>
+</html>

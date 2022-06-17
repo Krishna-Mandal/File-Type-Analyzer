@@ -1,0 +1,15 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    fun findAndStartThread(threads: List<Thread>) {
+        // implement this function
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/20163#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 16 Jun 2022 21:03:24 UTC
+record: -1

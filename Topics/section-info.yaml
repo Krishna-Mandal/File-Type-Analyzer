@@ -5,3 +5,5 @@ content:
 - Binary search
 - Thread synchronization
 - Monitor and Thread synchronization
+- Executors
+- States of a thread

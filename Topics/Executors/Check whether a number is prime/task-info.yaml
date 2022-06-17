@@ -1,0 +1,27 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    import java.util.concurrent.*
+
+    fun main() {
+        val executor: ExecutorService // assign an object to it
+        val numbers: List<Int> = readln().split(" ").map { el -> el.toInt() }
+        for (number in numbers) {
+            // create and submit tasks
+        }
+    }
+
+    class PrintIfPrimeTask(private val number: Int) : Runnable {
+        override fun run() {
+            // write code of task here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/20103#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 15 Jun 2022 21:40:51 UTC
+record: -1

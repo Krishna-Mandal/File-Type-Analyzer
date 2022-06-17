@@ -1,0 +1,22 @@
+<h2>Supplying a task</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Suppose you have an instance of <code class="language-kotlin">ExecutorService</code>.</p> 
+  <pre><code class="language-kotlin">val executor: ExecutorService = Executors.newSingleThreadExecutor()</code></pre> 
+  <p>The <code class="language-kotlin">main</code> thread supplies two tasks to it:</p> 
+  <pre><code class="language-kotlin">val task: Runnable = Runnable {
+    try {
+        TimeUnit.MILLISECONDS.sleep(1000)
+        println("Hello!")
+     } catch (e: Exception) {
+        e.printStackTrace()
+     }
+}
+
+executor.submit(task)
+executor.submit(task)</code></pre> 
+  <p> </p> 
+  <p>Select all correct statements:</p>
+ </body>
+</html>

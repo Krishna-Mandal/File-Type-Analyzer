@@ -1,0 +1,42 @@
+<h2>States of a thread</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Throughout its lifecycle, a thread's state changes. This is caused by both the actions of the programmer and some internal events in the operating system. In this topic, we will consider the possible states of a thread presented both in Kotlin terms and on the operating system (OS) level.</p> 
+  <h5 id="threadstate-enum" style="text-align: center;">Thread.State enum</h5> 
+  <p>In Kotlin, the state of a thread is defined by the <code class="language-kotlin">Thread.State</code> enum with six possible values:</p> 
+  <ul> 
+   <li><code class="language-kotlin">NEW</code>: an instance of the class <code class="language-kotlin">Thread</code> has been created, but it has not yet started;</li> 
+   <li><code class="language-kotlin">RUNNABLE</code>: the thread is running in the JVM, but it may be waiting for some resources from the OS (e.g., from the processor);</li> 
+   <li><code class="language-kotlin">BLOCKED</code>: the thread is blocked and waiting for a monitor lock (we will consider it later);</li> 
+   <li><code class="language-kotlin">WAITING</code>: the thread is waiting for another thread to perform a task indefinitely long (e.g., join without timeout);</li> 
+   <li><code class="language-kotlin">TIMED_WAITING</code>: the thread is waiting for another thread for a specified time (e.g., sleep, join with timeout);</li> 
+   <li><code class="language-kotlin">TERMINATED</code>: the thread is terminated when the <code class="language-kotlin">run</code> function completes execution or an uncaught exception occurs. Once the thread terminates, it never gets back to its runnable state.</li> 
+  </ul> 
+  <p>To obtain the current state of a thread, we use the parameter <code class="language-kotlin">state</code>.</p> 
+  <p>Let's look at how these states change depending on the programmer's actions.</p> 
+  <pre><code class="language-kotlin">val worker: Thread = thread(start = false, block = {
+    for (i in 1..10000)
+        print("$i ")
+    println("End of the work")
+}) // new worker to make a difficult task
+println(worker.state) // NEW
+
+worker.start() // start the worker
+println(worker.state) // RUNNABLE
+
+worker.join()  // waiting for completing the worker
+println(worker.state) // TERMINATED</code></pre> 
+  <p>When a thread is created, its state is <code class="language-kotlin">NEW</code>. When a thread is started, its state is <code class="language-kotlin">RUNNABLE</code> (the function <code class="language-kotlin">run</code> may not be called yet). Finally, when a thread is completed, the state is <code class="language-kotlin">TERMINATED</code>. Besides, the <code class="language-kotlin">main</code> thread also goes through the state <code class="language-kotlin">WAITING</code> (indefinitely long) after invoking the <code class="language-kotlin">thread.join()</code> function.</p> 
+  <h5 id="the-almost-real-lifecycle-of-a-thread" style="text-align: center;">The (almost) real lifecycle of a thread</h5> 
+  <p>The above states have been discussed in Kotlin terms. The real lifecycle of a thread is slightly different. For example, the <code class="language-kotlin">RUNNABLE</code> state is actually more complex than it might seem: in this state, a thread might actually be running or it might be ready to run.</p> 
+  <p>Below, you may see the simplified lifecycle of a thread in the OS terminology. The diagram includes five states and the events that cause the thread to jump from one state to another. Please do not confuse these states with the corresponding states in Kotlin (those are in UPPERCASE).</p> 
+  <p style="text-align: center;"><img alt="" height="284" src="https://ucarecdn.com/06e9a09a-7e0a-4d18-8bb7-cbe6bbd33f21/" width="812"></p> 
+  <p><strong>The simplified lifecycle of a thread in the operating system</strong></p> 
+  <p>After initialization, the thread is ready to run (<strong>Ready</strong>). It is the responsibility of the <strong>thread scheduler</strong> to give some instants of time for the thread to run (<strong>Running</strong>) and then move it again to <strong>Ready</strong>. This is used to share the processor time between multiple threads concurrently: otherwise, one thread could consume all the available processor time.</p> 
+  <p>The <strong>Waiting </strong>state means that a thread is temporarily inactive (for example, it may be waiting for another thread or for I/O to complete). A thread in this state cannot continue its execution any further until it is moved to the <strong>Ready</strong> state. Actually, the waiting state is a set of different states, which we will consider in the following topics.</p> 
+  <p>Of course, the real lifecycle of threads is even more complex than we've outlined, but for now, it is enough to have at least a general understanding of how threads work.</p> 
+  <h5 id="conclusion" style="text-align: center;">Conclusion</h5> 
+  <p>In this topic, we've learned what states threads can go through in their lifecycle. It's really important to know that in order to manage your threads' work. Now, to solidify your knowledge, let's move on to some practice.</p>
+ </body>
+</html>

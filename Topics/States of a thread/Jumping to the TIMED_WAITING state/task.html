@@ -1,0 +1,11 @@
+<h2>Jumping to the TIMED_WAITING state</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Suppose that we have two references: one to the current thread and one to another thread.</p> 
+  <pre><code class="language-kotlin">val currentThread = Thread.currentThread()
+val anotherThread = thread(start = false, block = {})
+anotherThread.start()</code></pre> 
+  <p>Which invocations will make the <code class="language-kotlin">currentThread</code> jump to the state <code class="language-kotlin">TIMED_WAITING</code>?</p>
+ </body>
+</html>

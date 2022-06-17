@@ -1,0 +1,7 @@
+content:
+- Theory
+- The current state of a thread
+- Jumping to the TIMED_WAITING state
+- A thread in the NEW state
+- Print the name of the TERMINATED thread
+- Finding and starting a thread

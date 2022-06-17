@@ -1,0 +1,27 @@
+<h2>The order of lines in output</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a code snippet that creates an executor and submits two tasks to it:</p> 
+  <pre><code class="language-kotlin">fun main() {
+
+    val executor: ExecutorService = Executors.newFixedThreadPool(4)
+
+    for (i in 1..2) {
+        val taskNumber: Int = i
+        executor.submit { println("Starting task-$taskNumber") }
+    }
+
+    TimeUnit.MILLISECONDS.sleep(50) // the current thread waits for 50 ms
+
+    executor.shutdown()
+
+    println("Main completed")
+}</code></pre> 
+  <p>Here is the output of one execution of the program:</p> 
+  <pre><code class="language-no-highlight">Main completed
+Starting task-1
+Starting task-2</code></pre> 
+  <p>Select one correct statement about the order of lines in the output.</p>
+ </body>
+</html>
