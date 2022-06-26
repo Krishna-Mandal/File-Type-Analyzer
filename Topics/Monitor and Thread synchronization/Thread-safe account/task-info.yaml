@@ -19,8 +19,5 @@ files:
     }
   learner_created: false
 feedback_link: https://hyperskill.org/learn/step/17908#comment
-status: Solved
-feedback:
-  message: <html>Correct solution</html>
-  time: Mon, 30 May 2022 20:47:37 UTC
+status: Failed
 record: -1

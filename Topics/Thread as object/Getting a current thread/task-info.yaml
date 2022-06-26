@@ -1,9 +1,9 @@
 type: choice
 is_multiple_choice: false
 options:
+- text: this.currentThread()
 - text: Object.currentThread()
 - text: Runtime.currentThread()
-- text: this.currentThread()
 - text: Thread.currentThread()
 files:
 - name: src/Main.kt

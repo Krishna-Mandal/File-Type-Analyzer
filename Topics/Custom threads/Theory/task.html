@@ -27,7 +27,7 @@
     }
 }</code></pre> 
   <p>In both cases, you should override the <code class="language-kotlin">run</code> method, which is a regular method and contains code to perform a task. Which approach to choose depends on the task and on your preferences. If you extend the <code class="language-kotlin">Thread</code> class, you can accept fields and methods of the base class but you cannot extend other classes, since Kotlin doesn't have multiple inheritance of classes. </p> 
-  <p>As you may know, the <code class="language-kotlin">Thread</code> class has a lot of constructors. You may find a full list <a target="_blank" href="https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#constructor_summary" rel="noopener noreferrer nofollow">here</a>. We will use some of them to demonstrate custom thread creation:</p> 
+  <p>As you may know, the <code class="language-kotlin">Thread</code> class has a lot of constructors. You may find a full list <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#constructor_summary" rel="noopener noreferrer nofollow" target="_blank">here</a>. We will use some of them to demonstrate custom thread creation:</p> 
   <pre><code class="language-kotlin">val t1 = HelloThread() // a subclass of Thread
 
 val t2 = Thread(HelloRunnable()) // passing runnable</code></pre> 
@@ -61,8 +61,7 @@ val t4 = thread(start = false, name = "Thread 4", block = {
    The function 
    <code class="language-kotlin">thread()</code> is from the 
    <code class="language-kotlin">kotlin.concurrent</code> package, don't forget to import it!
-  </div>
-  <p></p> 
+  </div> 
   <p>Now you've created objects for threads, but you're not done yet. To perform the tasks you need, you'll have to start your thread.</p> 
   <h5 id="starting-threads" style="text-align: center;">Starting threads</h5> 
   <p>The class <code class="language-kotlin">Thread</code> has a method called <code class="language-kotlin">start()</code>, which is used to start a thread. At some point, after you invoke this method, the method <code class="language-kotlin">run</code> will be invoked automatically, but it won't happen immediately.</p> 
@@ -97,15 +96,13 @@ val t4 = thread(start = false, name = "Thread 4", block = {
    <code class="language-kotlin">start</code> if you'd like to execute your code inside 
    <code class="language-kotlin">run</code> in another thread. If you invoke 
    <code class="language-kotlin">run</code> directly, the code will be executed in the same thread.
-  </div>
-  <p></p> 
+  </div> 
   <p></p>
   <div class="alert alert-warning">
    If you try to start a thread more than once, 
    <code class="language-kotlin">start</code> throws 
    <code class="language-kotlin">IllegalThreadStateException</code>.
-  </div>
-  <p></p> 
+  </div> 
   <p>Despite the fact that within a single thread all statements are executed sequentially, it is impossible to determine the relative order of statements between multiple threads without additional measures that we will not consider in this lesson. </p> 
   <p>Consider the following code:</p> 
   <pre><code class="language-kotlin">fun main() {
@@ -128,8 +125,7 @@ Hello, i'm Thread-1</code></pre>
   <p></p>
   <div class="alert alert-warning">
     Do not rely on the order of execution of statements between different threads unless you've taken special measures.
-  </div>
-  <p></p> 
+  </div> 
   <h5 id="a-simple-multithreaded-program" style="text-align: center;">A simple multithreaded program</h5> 
   <p>Let's consider a simple multithreaded program with two threads. The first thread reads numbers from the standard input and prints out their squares. At the same time, the main thread occasionally prints messages to the standard output. Both threads work simultaneously.</p> 
   <p>Here is the thread that reads numbers in a loop and squares them. It has a break statement to stop the loop if the given number is 0.</p> 
